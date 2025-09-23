@@ -1,0 +1,35 @@
+{
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "api-key",
+            "description": "Enter your JIRA PAT",
+            "password": true
+        }
+    ],
+    "servers": {
+        "Jira": {
+            "type": "stdio",
+            "command": "dotnet",
+            "args": [
+                "run",
+                "--project",
+                "../MCPJira/MCPJira.csproj",
+                "-nowarn",
+                "--stdio"
+            ],
+            "env": {
+                "X-API-KEY": "${input:api-key}",
+                "JiraBaseUrl": "<YOUR_JIRA_INSTANCE_URL>",
+                "JiraProjectKey": "<YOUR_JIRA_PROJECT_KEY>"
+            }
+        },
+        "JiraSSE": {
+            "url": "http://localhost:5000",
+            "type": "sse",
+            "headers": {
+                "X-API-KEY": "${input:api-key}"
+            }
+        }
+    }
+}
